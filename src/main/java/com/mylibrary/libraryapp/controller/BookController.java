@@ -1,5 +1,6 @@
 package com.mylibrary.libraryapp.controller;
 
+import com.mylibrary.libraryapp.dto.BookDTO;
 import com.mylibrary.libraryapp.entity.Book;
 import com.mylibrary.libraryapp.service.BookService;
 import lombok.AllArgsConstructor;
@@ -20,8 +21,8 @@ public class BookController {
     // API to get book by id
     // e.g. http://localhost:8080/api/books/1
     @GetMapping("{id}")
-    public ResponseEntity<Book> getBookById(@PathVariable("id") Long bookId) {
-        Book book = bookService.getBookById(bookId);
+    public ResponseEntity<BookDTO> getBookById(@PathVariable("id") Long bookId) {
+        BookDTO book = bookService.getBookById(bookId);
         return new ResponseEntity<>(book, HttpStatus.OK);
     }
 }

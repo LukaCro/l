@@ -1,6 +1,8 @@
 package com.mylibrary.libraryapp.service.impl;
 
+import com.mylibrary.libraryapp.dto.BookDTO;
 import com.mylibrary.libraryapp.entity.Book;
+import com.mylibrary.libraryapp.mapper.BookMapper;
 import com.mylibrary.libraryapp.repository.BookRepository;
 import com.mylibrary.libraryapp.service.BookService;
 import lombok.AllArgsConstructor;
@@ -15,8 +17,9 @@ public class BookServiceImpl implements BookService {
     private BookRepository bookRepository;
 
     @Override
-    public Book getBookById(Long bookId) {
+    public BookDTO getBookById(Long bookId) {
         Optional<Book> optionalBook = bookRepository.findById(bookId);
-        return optionalBook.get();
+        Book book = optionalBook.get();
+        return BookMapper.mapToBookDTO(book);
     }
 }

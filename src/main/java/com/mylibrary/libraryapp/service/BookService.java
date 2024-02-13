@@ -1,8 +1,9 @@
 package com.mylibrary.libraryapp.service;
 
+import com.mylibrary.libraryapp.dto.BookDTO;
 import com.mylibrary.libraryapp.entity.Book;
 
 public interface BookService {
 
-    Book getBookById(Long bookId);
+    BookDTO getBookById(Long bookId);
 }
