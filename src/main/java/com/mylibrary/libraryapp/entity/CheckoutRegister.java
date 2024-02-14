@@ -36,4 +36,6 @@ public class CheckoutRegister {
     @Column(nullable = false)
     @NotNull
     private Boolean active;
+
+    private Double overdueFine;
 }

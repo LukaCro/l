@@ -18,4 +18,18 @@ public class BookMapper {
         bookDTO.setBarcodeNumber(book.getBarcodeNumber());
         return bookDTO;
     }
+
+    public static Book mapToBookEntity(BookDTO bookDTO) {
+        Book book = new Book();
+        book.setId(bookDTO.getId());
+        book.setTitle(bookDTO.getTitle());
+        book.setAuthor(bookDTO.getAuthor());
+        book.setIsbn(bookDTO.getIsbn());
+        book.setPublisher(bookDTO.getPublisher());
+        book.setYearOfPublication(bookDTO.getYearOfPublication());
+        book.setPlaceOfPublication(bookDTO.getPlaceOfPublication());
+        book.setNoOfAvailableCopies(bookDTO.getNoOfAvailableCopies());
+        book.setBarcodeNumber(bookDTO.getBarcodeNumber());
+        return book;
+    }
 }

@@ -47,8 +47,36 @@ public class BookController {
     @GetMapping("search")
     public ResponseEntity<List<BookDTO>> searchBooks(
             @RequestParam(value = "title", required = false) String title,
-            @RequestParam(value = "author", required = false) String author) {
-        List<BookDTO> books = bookService.findBooksByCriteria(title, author);
+            @RequestParam(value = "author", required = false) String author,
+            @RequestParam(value = "barcodeNumber", required = false) String barcodeNumber,
+            @RequestParam(value = "isbn", required = false) String isbn) {
+        List<BookDTO> books = bookService.findBooksByCriteria(title, author, barcodeNumber, isbn);
+        if (books.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(books, HttpStatus.OK);
     }
+
+    @PostMapping("addBook")
+    // http://localhost:8080/api/books/addBook
+    public ResponseEntity<BookDTO> addBook(@RequestBody BookDTO bookDTO) {
+        BookDTO savedBookDTO = bookService.addBook(bookDTO);
+        return new ResponseEntity<>(savedBookDTO, HttpStatus.CREATED);
+    }
+
+    @PutMapping("updateBook/{id}")
+    // this time I will use the same name for id
+    // e.g. http://localhost:8080/api/books/updateBook/5
+    public ResponseEntity<BookDTO> updateBook(@PathVariable Long id, @RequestBody BookDTO bookDTO) {
+        try {
+            bookDTO.setId(id);
+            BookDTO updatedBook = bookService.updateBook(bookDTO);
+            return new ResponseEntity<>(updatedBook, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+
 }
