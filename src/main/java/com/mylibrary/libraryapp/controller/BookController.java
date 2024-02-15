@@ -64,19 +64,14 @@ public class BookController {
         return new ResponseEntity<>(savedBookDTO, HttpStatus.CREATED);
     }
 
-    @PutMapping("updateBook/{id}")
+    @PatchMapping("updateBook/{id}")
     // this time I will use the same name for id
     // e.g. http://localhost:8080/api/books/updateBook/5
     public ResponseEntity<BookDTO> updateBook(@PathVariable Long id, @RequestBody BookDTO bookDTO) {
-        try {
-            bookDTO.setId(id);
-            BookDTO updatedBook = bookService.updateBook(bookDTO);
-            return new ResponseEntity<>(updatedBook, HttpStatus.OK);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
+        bookDTO.setId(id);
+        BookDTO updatedBook = bookService.updateBook(bookDTO);
+        return new ResponseEntity<>(updatedBook, HttpStatus.OK);
     }
-
 
 
 }

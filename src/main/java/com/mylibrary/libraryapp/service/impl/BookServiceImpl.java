@@ -85,16 +85,8 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDTO updateBook(BookDTO bookDTO) {
-        // add as the last
-        if (bookDTO.getId() == null) {
-            throw new IllegalArgumentException("Book ID cannot be null for update operation");
-        }
-
         // 1. find existing book by id
         Optional<Book> bookOptional = bookRepository.findById(bookDTO.getId());
-        if (!bookOptional.isPresent()) {
-            throw new IllegalArgumentException("Book with ID " + bookDTO.getId() + " not found");
-        }
 
         // 2. do partial update of the book (only non-null fields)
         Book bookToUpdate = bookOptional.get();
@@ -108,13 +100,29 @@ public class BookServiceImpl implements BookService {
     }
 
     private void updateBookEntityFromDTO(Book book, BookDTO bookDTO) {
-        if (bookDTO.getTitle() != null) book.setTitle(bookDTO.getTitle());
-        if (bookDTO.getAuthor() != null) book.setAuthor(bookDTO.getAuthor());
-        if (bookDTO.getIsbn() != null) book.setIsbn(bookDTO.getIsbn());
-        if (bookDTO.getPublisher() != null) book.setPublisher(bookDTO.getPublisher());
-        if (bookDTO.getYearOfPublication() != 0) book.setYearOfPublication(bookDTO.getYearOfPublication());
-        if (bookDTO.getPlaceOfPublication() != null) book.setPlaceOfPublication(bookDTO.getPlaceOfPublication());
-        if (bookDTO.getNoOfAvailableCopies() != 0) book.setNoOfAvailableCopies(bookDTO.getNoOfAvailableCopies());
-        if (bookDTO.getBarcodeNumber() != null) book.setBarcodeNumber(bookDTO.getBarcodeNumber());
+        if (bookDTO.getTitle() != null) {
+            book.setTitle(bookDTO.getTitle());
+        }
+        if (bookDTO.getAuthor() != null) {
+            book.setAuthor(bookDTO.getAuthor());
+        }
+        if (bookDTO.getIsbn() != null) {
+            book.setIsbn(bookDTO.getIsbn());
+        }
+        if (bookDTO.getPublisher() != null) {
+            book.setPublisher(bookDTO.getPublisher());
+        }
+        if (bookDTO.getYearOfPublication() != 0) {
+            book.setYearOfPublication(bookDTO.getYearOfPublication());
+        }
+        if (bookDTO.getPlaceOfPublication() != null) {
+            book.setPlaceOfPublication(bookDTO.getPlaceOfPublication());
+        }
+        if (bookDTO.getNoOfAvailableCopies() != 0) {
+            book.setNoOfAvailableCopies(bookDTO.getNoOfAvailableCopies());
+        }
+        if (bookDTO.getBarcodeNumber() != null) {
+            book.setBarcodeNumber(bookDTO.getBarcodeNumber());
+        }
     }
 }
