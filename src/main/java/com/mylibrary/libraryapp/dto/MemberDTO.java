@@ -16,4 +16,5 @@ public class MemberDTO {
     private String barcodeNumber;
     private LocalDate membershipStarted;
     private LocalDate membershipEnded;
+    private Boolean isActive;
 }

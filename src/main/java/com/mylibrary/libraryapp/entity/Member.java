@@ -50,4 +50,8 @@ public class Member {
 
     @Column
     private LocalDate membershipEnded;
+
+    @Column
+    @NotNull
+    private Boolean isActive = true;  // discuss boolean vs Boolean
 }
