@@ -3,8 +3,10 @@ package com.mylibrary.libraryapp.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 @Data
 @Entity
@@ -31,11 +33,10 @@ public class CheckoutRegister {
 
     @Column(nullable = false)
     @NotNull
-    private LocalDate returnDate;
+    private LocalDate dueDate;
 
-    @Column(nullable = false)
-    @NotNull
-    private Boolean active;
+    private LocalDate returnDate;
+    // if returnDate = null, the book is not returned
 
     private Double overdueFine;
 }

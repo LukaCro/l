@@ -23,20 +23,20 @@ public class MemberMapper {
         return dto;
     }
 
-    public static Member mapToMemberEntity(MemberDTO dto) {
+    public static Member mapToMemberEntity(MemberDTO memberDTO) {
         Member member = new Member();
-        member.setId(dto.getId()); // Be cautious with setting ID when creating new entities
-        member.setFirstName(dto.getFirstName());
-        member.setLastName(dto.getLastName());
-        member.setDateOfBirth(dto.getDateOfBirth());
-        if (dto.getPostalAddress() != null) {
+        member.setId(memberDTO.getId()); // Be cautious with setting ID when creating new entities
+        member.setFirstName(memberDTO.getFirstName());
+        member.setLastName(memberDTO.getLastName());
+        member.setDateOfBirth(memberDTO.getDateOfBirth());
+        if (memberDTO.getPostalAddress() != null) {
             member.setPostalAddress(new PostalAddress());
         }
-        member.setEmail(dto.getEmail());
-        member.setPhone(dto.getPhone());
-        member.setBarcodeNumber(dto.getBarcodeNumber());
-        member.setMembershipStarted(dto.getMembershipStarted());
-        member.setMembershipEnded(dto.getMembershipEnded());
+        member.setEmail(memberDTO.getEmail());
+        member.setPhone(memberDTO.getPhone());
+        member.setBarcodeNumber(memberDTO.getBarcodeNumber());
+        member.setMembershipStarted(memberDTO.getMembershipStarted());
+        member.setMembershipEnded(memberDTO.getMembershipEnded());
         return member;
     }
 }
