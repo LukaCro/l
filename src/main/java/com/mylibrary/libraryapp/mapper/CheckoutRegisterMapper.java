@@ -8,7 +8,9 @@ import com.mylibrary.libraryapp.repository.BookRepository;
 import com.mylibrary.libraryapp.repository.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CheckoutRegisterMapper {
 
     @Autowired

@@ -22,8 +22,8 @@ public class MemberController {
     // e.g. http://localhost:8080/api/members/1
     @GetMapping("{id}")
     public ResponseEntity<MemberDTO> getBookById(@PathVariable("id") Long memberId) {
-        MemberDTO member = memberService.getMemberById(memberId);
-        return new ResponseEntity<>(member, HttpStatus.OK);
+        MemberDTO memberDTO = memberService.getMemberById(memberId);
+        return new ResponseEntity<>(memberDTO, HttpStatus.OK);
     }
 
     // get all members

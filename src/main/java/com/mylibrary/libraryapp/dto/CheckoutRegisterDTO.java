@@ -13,6 +13,4 @@ public class CheckoutRegisterDTO {
     private LocalDate dueDate;
     private LocalDate returnDate;
     private Double overdueFine;
-
-    // Getters and Setters
 }

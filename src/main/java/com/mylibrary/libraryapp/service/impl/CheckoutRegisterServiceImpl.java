@@ -1,54 +1,104 @@
 package com.mylibrary.libraryapp.service.impl;
 
+import com.mylibrary.libraryapp.dto.BookDTO;
 import com.mylibrary.libraryapp.dto.CheckoutRegisterDTO;
+import com.mylibrary.libraryapp.entity.Book;
 import com.mylibrary.libraryapp.entity.CheckoutRegister;
+import com.mylibrary.libraryapp.mapper.BookMapper;
 import com.mylibrary.libraryapp.mapper.CheckoutRegisterMapper;
 import com.mylibrary.libraryapp.repository.CheckoutRegisterRepository;
 import com.mylibrary.libraryapp.service.CheckoutRegisterService;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
+@Service
+@RequiredArgsConstructor
 public class CheckoutRegisterServiceImpl implements CheckoutRegisterService {
+
     @Value("${library.overdueFineRate}")
     private double overdueFineRate;
 
-    private CheckoutRegisterRepository checkoutRegisterRepository;
+    @Value("${library.loanPeriodInDays}")
+    private int loanPeriodInDays;
+
+    private final CheckoutRegisterRepository checkoutRegisterRepository;
+    private final CheckoutRegisterMapper checkoutRegisterMapper;
 
     @Override
-    public CheckoutRegisterDTO createCheckout(CheckoutRegisterDTO checkoutRegisterDTO) {
-        CheckoutRegisterMapper checkoutRegisterMapper = new CheckoutRegisterMapper();
+    public CheckoutRegisterDTO createCheckoutRegister(CheckoutRegisterDTO checkoutRegisterDTO) {
         CheckoutRegister checkoutRegister = checkoutRegisterMapper.mapToCheckoutRegisterEntity(checkoutRegisterDTO);
+        // set dueDate
+        LocalDate dueDate = calculateDueDate(checkoutRegister.getCheckoutDate());
+        checkoutRegister.setDueDate(dueDate);
         checkoutRegister = checkoutRegisterRepository.save(checkoutRegister);
         return checkoutRegisterMapper.mapToCheckoutRegisterDTO(checkoutRegister);
     }
 
-    @Override
-    public void returnBook(Long checkoutRegisterId, LocalDate returnDate) {
+    private LocalDate calculateDueDate(LocalDate checkoutDate) {
+        return checkoutDate.plusDays(loanPeriodInDays);
     }
 
-    public void calculateOverdueFine(CheckoutRegister checkoutRegister) {
-        if (checkoutRegister.getReturnDate() != null && checkoutRegister.getDueDate() != null
+    @Override
+    public CheckoutRegisterDTO getCheckoutRegisterById(Long registerId) {
+        Optional<CheckoutRegister> optionalCheckoutRegister = checkoutRegisterRepository.findById(registerId);
+        CheckoutRegister checkoutRegister = optionalCheckoutRegister.get();
+        return checkoutRegisterMapper.mapToCheckoutRegisterDTO(checkoutRegister);
+    }
+
+    @Override
+    public List<CheckoutRegisterDTO> getAllRegisters() {
+        List<CheckoutRegister> checkoutRegisters = checkoutRegisterRepository.findAll();
+        return checkoutRegisters.stream()
+                .map(checkoutRegisterMapper::mapToCheckoutRegisterDTO) // convert each book to BookDTO
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public CheckoutRegisterDTO updateRegister(CheckoutRegisterDTO checkoutRegisterDTO) {
+            // find existing register by id
+            Optional<CheckoutRegister> checkoutRegisterOptional = checkoutRegisterRepository.findById(checkoutRegisterDTO.getId());
+
+            // do partial update of the book (only non-null fields)
+            CheckoutRegister registerToUpdate = checkoutRegisterOptional.get();
+            updateRegisterEntityFromDTO(registerToUpdate, checkoutRegisterDTO);
+
+            // calculate overdue fine if neccessary
+            calculateOverdueFine(registerToUpdate);
+
+            // save updated book to database
+            checkoutRegisterRepository.save(registerToUpdate);
+
+            // return bookDTO using mapper
+            return checkoutRegisterMapper.mapToCheckoutRegisterDTO(registerToUpdate);
+    }
+
+    private void updateRegisterEntityFromDTO(CheckoutRegister registerToUpdate, CheckoutRegisterDTO checkoutRegisterDTO) {
+
+        // if someone wants to prolong
+        if (checkoutRegisterDTO.getDueDate() != null) {
+            registerToUpdate.setDueDate(checkoutRegisterDTO.getDueDate());
+        }
+        // when the book is returned
+        if (checkoutRegisterDTO.getReturnDate() != null) {
+            registerToUpdate.setReturnDate(checkoutRegisterDTO.getReturnDate());
+        }
+    }
+
+    private void calculateOverdueFine(CheckoutRegister checkoutRegister) {
+        if (checkoutRegister.getReturnDate() != null
                 && checkoutRegister.getReturnDate().isAfter(checkoutRegister.getDueDate())) {
             long daysOverdue = ChronoUnit.DAYS.between(checkoutRegister.getDueDate(), checkoutRegister.getReturnDate());
             checkoutRegister.setOverdueFine(daysOverdue * overdueFineRate);
         } else {
-            checkoutRegister.setOverdueFine(0.0); // or null, depending on how you want to handle no fines
+            checkoutRegister.setOverdueFine(0.0);
         }
     }
-
-
-    /*
-    @Override
-    public void returnBook(Long checkoutRegisterId, LocalDate returnDate) {
-        CheckoutRegister checkoutRegister = checkoutRegisterRepository.findById(checkoutRegisterId)
-                .orElseThrow(() -> new EntityNotFoundException("CheckoutRegister not found"));
-
-        checkoutRegister.setReturnDate(returnDate);
-        checkoutRegister.calculateOverdueFine(); // Calculate the overdue fine
-        checkoutRegisterRepository.save(checkoutRegister);
-    }
-
-    */
 }

@@ -22,8 +22,8 @@ public class BookController {
     // e.g. http://localhost:8080/api/books/1
     @GetMapping("{id}")
     public ResponseEntity<BookDTO> getBookById(@PathVariable("id") Long bookId) {
-        BookDTO book = bookService.getBookById(bookId);
-        return new ResponseEntity<>(book, HttpStatus.OK);
+        BookDTO bookDTO = bookService.getBookById(bookId);
+        return new ResponseEntity<>(bookDTO, HttpStatus.OK);
     }
 
     // get all books

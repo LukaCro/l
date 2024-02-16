@@ -136,9 +136,8 @@ public class MemberServiceImpl implements MemberService {
         if (memberDTO.getMembershipEnded() != null) {
             memberToUpdate.setMembershipEnded(memberDTO.getMembershipEnded());
         }
-        if (memberDTO.getIsActive() != null) {
-            memberToUpdate.setIsActive(memberDTO.getIsActive());
-        }
+        // let's be fancy here
+        memberToUpdate.setIsActive(memberDTO.getMembershipEnded() == null);
 
         // Handle PostalAddress update
         if (memberDTO.getPostalAddress() != null) {
@@ -158,8 +157,5 @@ public class MemberServiceImpl implements MemberService {
             memberToUpdate.setPostalAddress(addressToUpdate);
         }
     }
-
-
-
 
 }
