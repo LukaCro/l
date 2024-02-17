@@ -1,11 +1,11 @@
 package com.mylibrary.libraryapp.controller;
 
 import com.mylibrary.libraryapp.dto.BookDTO;
-import com.mylibrary.libraryapp.entity.Book;
 import com.mylibrary.libraryapp.service.BookService;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,12 +16,15 @@ import java.util.List;
 @RequestMapping("api/books")
 public class BookController {
 
+    private static final Logger logger = LoggerFactory.getLogger(BookController.class);
+
     private BookService bookService;
 
     // API to get book by id
     // e.g. http://localhost:8080/api/books/1
     @GetMapping("{id}")
     public ResponseEntity<BookDTO> getBookById(@PathVariable("id") Long bookId) {
+        logger.info("Fetching book with id: {}", bookId);
         BookDTO bookDTO = bookService.getBookById(bookId);
         return new ResponseEntity<>(bookDTO, HttpStatus.OK);
     }
@@ -30,6 +33,7 @@ public class BookController {
     // http://localhost:8080/api/books/listAll
     @GetMapping("listAll")
     public ResponseEntity<List<BookDTO>> getAllBooks() {
+        logger.info("Fetching all books...");
         List<BookDTO> allBooks = bookService.getAllBooks();
         return new ResponseEntity<>(allBooks, HttpStatus.OK);
     }
@@ -38,6 +42,7 @@ public class BookController {
     // e.g. http://localhost:8080/api/books/title/queryTitle=it
     @GetMapping("title")
     public ResponseEntity<List<BookDTO>> searchBooksByTitle(@RequestParam(name = "queryTitle") String title) {
+        logger.info("Searching books by title: {}", title);
         List<BookDTO> books = bookService.findBooksByTitle(title);
         return new ResponseEntity<>(books, HttpStatus.OK);
     }
@@ -50,6 +55,7 @@ public class BookController {
             @RequestParam(value = "author", required = false) String author,
             @RequestParam(value = "barcodeNumber", required = false) String barcodeNumber,
             @RequestParam(value = "isbn", required = false) String isbn) {
+        logger.info("Searching books with criteria - title: {}, author: {}, barcodeNumber: {}, isbn: {}", title, author, barcodeNumber, isbn);
         List<BookDTO> books = bookService.findBooksByCriteria(title, author, barcodeNumber, isbn);
         if (books.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -60,6 +66,7 @@ public class BookController {
     @PostMapping("addBook")
     // http://localhost:8080/api/books/addBook
     public ResponseEntity<BookDTO> addBook(@RequestBody BookDTO bookDTO) {
+        logger.info("Adding new book: {}, {}", bookDTO.getTitle(), bookDTO.getAuthor());
         BookDTO savedBookDTO = bookService.addBook(bookDTO);
         return new ResponseEntity<>(savedBookDTO, HttpStatus.CREATED);
     }
@@ -68,6 +75,7 @@ public class BookController {
     // this time I will use the same name for id
     // e.g. http://localhost:8080/api/books/updateBook/5
     public ResponseEntity<BookDTO> updateBook(@PathVariable Long id, @RequestBody BookDTO bookDTO) {
+        logger.info("Updating book with id: {}", id);
         bookDTO.setId(id);
         BookDTO updatedBook = bookService.updateBook(bookDTO);
         return new ResponseEntity<>(updatedBook, HttpStatus.OK);

@@ -3,6 +3,8 @@ package com.mylibrary.libraryapp.controller;
 import com.mylibrary.libraryapp.dto.CheckoutRegisterDTO;
 import com.mylibrary.libraryapp.service.CheckoutRegisterService;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +16,7 @@ import java.util.List;
 @RequestMapping("api/registers")
 public class CheckoutRegisterController {
 
+    private static final Logger logger = LoggerFactory.getLogger(CheckoutRegisterController.class);
     private final CheckoutRegisterService checkoutRegisterService;
 
     @PostMapping("addRegister")
@@ -28,6 +31,7 @@ public class CheckoutRegisterController {
     // e.g. http://localhost:8080/api/registers/1
     @GetMapping("{id}")
     public ResponseEntity<CheckoutRegisterDTO> getCheckoutRegisterById(@PathVariable("id") Long registerId) {
+        logger.info("Fetching checkout register with ID: {}", registerId);
         CheckoutRegisterDTO checkoutRegisterDTO = checkoutRegisterService.getCheckoutRegisterById(registerId);
         return new ResponseEntity<>(checkoutRegisterDTO, HttpStatus.OK);
     }
@@ -35,6 +39,7 @@ public class CheckoutRegisterController {
     // http://localhost:8080/api/registers/listAll
     @GetMapping("listAll")
     public ResponseEntity<List<CheckoutRegisterDTO>> getAllRegisters() {
+        logger.info("Fetching all checkout registers...");
         List<CheckoutRegisterDTO> allRegisters = checkoutRegisterService.getAllRegisters();
         return new ResponseEntity<>(allRegisters, HttpStatus.OK);
     }
@@ -42,6 +47,7 @@ public class CheckoutRegisterController {
     @PatchMapping("updateRegister/{id}")
     // e.g. http://localhost:8080/api/registers/updateRegister/5
     public ResponseEntity<CheckoutRegisterDTO> updateRegister(@PathVariable Long id, @RequestBody CheckoutRegisterDTO checkoutRegisterDTO) {
+        logger.info("Updating register with ID: {}", id);
         checkoutRegisterDTO.setId(id);
         CheckoutRegisterDTO updatedRegister = checkoutRegisterService.updateRegister(checkoutRegisterDTO);
         return new ResponseEntity<>(updatedRegister, HttpStatus.OK);
