@@ -1,6 +1,8 @@
 package com.mylibrary.libraryapp.controller;
 
 import com.mylibrary.libraryapp.dto.BookDTO;
+import com.mylibrary.libraryapp.exception.ErrorDetails;
+import com.mylibrary.libraryapp.exception.ResourceNotFoundException;
 import com.mylibrary.libraryapp.service.BookService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -8,7 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -79,6 +83,12 @@ public class BookController {
         bookDTO.setId(id);
         BookDTO updatedBook = bookService.updateBook(bookDTO);
         return new ResponseEntity<>(updatedBook, HttpStatus.OK);
+    }
+
+    @DeleteMapping("deleteBook/{id}")
+    public ResponseEntity<String> deleteBook(@PathVariable Long id) {
+        bookService.deleteBook(id);
+        return new ResponseEntity<>("Book successfully deleted", HttpStatus.OK);
     }
 
 

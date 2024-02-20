@@ -4,11 +4,11 @@ import com.mylibrary.libraryapp.dto.AddressDTO;
 import com.mylibrary.libraryapp.dto.MemberDTO;
 import com.mylibrary.libraryapp.entity.Member;
 import com.mylibrary.libraryapp.entity.PostalAddress;
+import com.mylibrary.libraryapp.exception.ResourceNotFoundException;
 import com.mylibrary.libraryapp.mapper.AddressMapper;
 import com.mylibrary.libraryapp.mapper.MemberMapper;
 import com.mylibrary.libraryapp.repository.AddressRepository;
 import com.mylibrary.libraryapp.repository.MemberRepository;
-import com.mylibrary.libraryapp.service.AddressService;
 import com.mylibrary.libraryapp.service.MemberService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -108,6 +108,18 @@ public class MemberServiceImpl implements MemberService {
 
         // 4. return memberDTO using mapper
         return MemberMapper.mapToMemberDTO(memberToUpdate);
+    }
+
+    @Override
+    public void deleteMember(Long memberId) {
+        // it's a little complicated because we have to delete from postal_address table as well
+        /* Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new ResourceNotFoundException("Member", "ID", memberId));
+        if (member.getPostalAddress() != null) {
+            addressRepository.deleteById(member.getPostalAddress().getId());
+        } */
+        // add (cascade = CascadeType.ALL) to repository
+        memberRepository.deleteById(memberId);
     }
 
     public void updateMemberEntityFromDTO(Member memberToUpdate, MemberDTO memberDTO) {

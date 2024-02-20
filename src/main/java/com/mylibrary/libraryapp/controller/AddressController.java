@@ -2,6 +2,7 @@ package com.mylibrary.libraryapp.controller;
 
 import com.mylibrary.libraryapp.dto.AddressDTO;
 import com.mylibrary.libraryapp.service.AddressService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +40,7 @@ public class AddressController {
 
     @PostMapping("createAddress")
     // http://localhost:8080/api/addresses/createAddress
-    public ResponseEntity<AddressDTO> addBook(@RequestBody AddressDTO addressDTO) {
+    public ResponseEntity<AddressDTO> addBook(@Valid @RequestBody AddressDTO addressDTO) {
         logger.info("Creating a new postal address: {}", addressDTO);
         AddressDTO savedPostalAddressDTO = addressService.createAddress(addressDTO);
         return new ResponseEntity<>(savedPostalAddressDTO, HttpStatus.CREATED);
@@ -52,5 +53,11 @@ public class AddressController {
         addressDTO.setId(id);
         AddressDTO updatedAddress = addressService.updateAddress(addressDTO);
         return new ResponseEntity<>(updatedAddress, HttpStatus.OK);
+    }
+
+    @DeleteMapping("deleteAddress/{id}")
+    public ResponseEntity<String> deleteMember(@PathVariable Long id) {
+        addressService.deleteAddress(id);
+        return new ResponseEntity<>("Address successfully deleted", HttpStatus.OK);
     }
 }

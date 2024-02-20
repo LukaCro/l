@@ -53,4 +53,10 @@ public class CheckoutRegisterController {
         return new ResponseEntity<>(updatedRegister, HttpStatus.OK);
     }
 
+    @DeleteMapping("deleteRegister/{id}")
+    public ResponseEntity<String> deleteRegister(@PathVariable Long id) {
+        checkoutRegisterService.deleteRegister(id);
+        return new ResponseEntity<>("Checkout register successfully deleted", HttpStatus.OK);
+    }
+
 }

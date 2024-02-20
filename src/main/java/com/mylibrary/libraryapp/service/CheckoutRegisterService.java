@@ -16,4 +16,6 @@ public interface CheckoutRegisterService {
 
     CheckoutRegisterDTO updateRegister(CheckoutRegisterDTO checkoutRegisterDTO);
 
+    void deleteRegister(Long id);
+
 }

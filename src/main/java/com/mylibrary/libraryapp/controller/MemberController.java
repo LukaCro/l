@@ -4,6 +4,7 @@ import com.mylibrary.libraryapp.dto.BookDTO;
 import com.mylibrary.libraryapp.dto.MemberDTO;
 import com.mylibrary.libraryapp.service.BookService;
 import com.mylibrary.libraryapp.service.MemberService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,7 +59,7 @@ public class MemberController {
 
     @PostMapping("addMember")
     // http://localhost:8080/api/members/addMember
-    public ResponseEntity<MemberDTO> addBook(@RequestBody MemberDTO memberDTO) {
+    public ResponseEntity<MemberDTO> addBook(@Valid @RequestBody MemberDTO memberDTO) {
         logger.info("Adding new member: {}", memberDTO);
         MemberDTO savedMemberDTO = memberService.addMember(memberDTO);
         return new ResponseEntity<>(savedMemberDTO, HttpStatus.CREATED);
@@ -66,12 +67,16 @@ public class MemberController {
 
     @PatchMapping("updateMember/{id}")
     // e.g. http://localhost:8080/api/members/updateMember/5
-    public ResponseEntity<MemberDTO> updateMember(@PathVariable Long id, @RequestBody MemberDTO memberDTO) {
+    public ResponseEntity<MemberDTO> updateMember(@PathVariable Long id, @Valid @RequestBody MemberDTO memberDTO) {
         logger.info("Updating member with id: {}", id);
         memberDTO.setId(id);
         MemberDTO updatedMember = memberService.updateMember(memberDTO);
         return new ResponseEntity<>(updatedMember, HttpStatus.OK);
     }
 
-
+    @DeleteMapping("deleteMember/{id}")
+    public ResponseEntity<String> deleteMember(@PathVariable Long id) {
+        memberService.deleteMember(id);
+        return new ResponseEntity<>("Member successfully deleted", HttpStatus.OK);
+    }
 }

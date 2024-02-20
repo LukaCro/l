@@ -80,6 +80,11 @@ public class CheckoutRegisterServiceImpl implements CheckoutRegisterService {
             return checkoutRegisterMapper.mapToCheckoutRegisterDTO(registerToUpdate);
     }
 
+    @Override
+    public void deleteRegister(Long id) {
+        checkoutRegisterRepository.deleteById(id);
+    }
+
     private void updateRegisterEntityFromDTO(CheckoutRegister registerToUpdate, CheckoutRegisterDTO checkoutRegisterDTO) {
 
         // if someone wants to prolong

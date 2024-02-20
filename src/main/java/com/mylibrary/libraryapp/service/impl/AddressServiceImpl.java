@@ -56,6 +56,11 @@ public class AddressServiceImpl implements AddressService {
         return AddressMapper.mapToAddressDTO(addressToUpdate);
     }
 
+    @Override
+    public void deleteAddress(Long id) {
+        addressRepository.deleteById(id);
+    }
+
     public void updateAddressEntityFromDTO(PostalAddress addressToUpdate, AddressDTO postalAddressDTO) {
         if (postalAddressDTO.getStreetName() != null) {
             addressToUpdate.setStreetName(postalAddressDTO.getStreetName());

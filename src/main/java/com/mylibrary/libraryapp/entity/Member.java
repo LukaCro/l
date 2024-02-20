@@ -1,6 +1,7 @@
 package com.mylibrary.libraryapp.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -28,7 +29,7 @@ public class Member {
     @NotNull
     private LocalDate dateOfBirth;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL) // this should be added when delete is introduced
     @JoinColumn(name = "postal_address_id")
     private PostalAddress postalAddress;
 
