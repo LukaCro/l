@@ -12,8 +12,8 @@ public class BookDTO {
     private String author;
     private String isbn;
     private String publisher;
-    private int yearOfPublication;
+    private Integer yearOfPublication;
     private String placeOfPublication;
-    private int noOfAvailableCopies;
+    private Integer noOfAvailableCopies;
     private String barcodeNumber;
 }

@@ -18,4 +18,8 @@ public interface CheckoutRegisterService {
 
     void deleteRegister(Long id);
 
+    List<CheckoutRegisterDTO> getCheckoutsByMemberId(Long id);
+
+    public List<CheckoutRegisterDTO> getCheckoutsByBookId(Long bookId);
+
 }

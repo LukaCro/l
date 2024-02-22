@@ -33,7 +33,7 @@ public class Book {
 
     @Column(nullable = false)
     @NotNull
-    private int yearOfPublication;
+    private Integer yearOfPublication;
 
     @Column(nullable = false)
     @NotNull
@@ -41,7 +41,7 @@ public class Book {
 
     @Column(nullable = false)
     @NotNull
-    private int noOfAvailableCopies;
+    private Integer noOfAvailableCopies;
 
     @Column(nullable = false)
     @NotNull

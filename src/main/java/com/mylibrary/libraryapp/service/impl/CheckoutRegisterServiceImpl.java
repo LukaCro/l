@@ -4,6 +4,7 @@ import com.mylibrary.libraryapp.dto.BookDTO;
 import com.mylibrary.libraryapp.dto.CheckoutRegisterDTO;
 import com.mylibrary.libraryapp.entity.Book;
 import com.mylibrary.libraryapp.entity.CheckoutRegister;
+import com.mylibrary.libraryapp.exception.ResourceNotFoundException;
 import com.mylibrary.libraryapp.mapper.BookMapper;
 import com.mylibrary.libraryapp.mapper.CheckoutRegisterMapper;
 import com.mylibrary.libraryapp.repository.CheckoutRegisterRepository;
@@ -83,6 +84,30 @@ public class CheckoutRegisterServiceImpl implements CheckoutRegisterService {
     @Override
     public void deleteRegister(Long id) {
         checkoutRegisterRepository.deleteById(id);
+    }
+
+    @Override
+    public List<CheckoutRegisterDTO> getCheckoutsByMemberId(Long id) {
+        List<CheckoutRegister> checkoutRegisters = checkoutRegisterRepository.findByMemberId(id);
+        // if non found
+        if (checkoutRegisters.isEmpty()) {
+            throw new ResourceNotFoundException("Checkout register", "Member ID", id);
+        }
+        return checkoutRegisters.stream()
+                .map(checkoutRegisterMapper::mapToCheckoutRegisterDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CheckoutRegisterDTO> getCheckoutsByBookId(Long id) {
+        List<CheckoutRegister> checkoutRegisters = checkoutRegisterRepository.findByBookId(id);
+        // if non found
+        if (checkoutRegisters.isEmpty()) {
+            throw new ResourceNotFoundException("Checkout register", "Book ID", id);
+        }
+        return checkoutRegisters.stream()
+                .map(checkoutRegisterMapper::mapToCheckoutRegisterDTO)
+                .collect(Collectors.toList());
     }
 
     private void updateRegisterEntityFromDTO(CheckoutRegister registerToUpdate, CheckoutRegisterDTO checkoutRegisterDTO) {

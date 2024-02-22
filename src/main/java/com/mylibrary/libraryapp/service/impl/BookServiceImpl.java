@@ -120,13 +120,13 @@ public class BookServiceImpl implements BookService {
         if (bookDTO.getPublisher() != null) {
             book.setPublisher(bookDTO.getPublisher());
         }
-        if (bookDTO.getYearOfPublication() != 0) {
+        if (bookDTO.getYearOfPublication() != null) {
             book.setYearOfPublication(bookDTO.getYearOfPublication());
         }
         if (bookDTO.getPlaceOfPublication() != null) {
             book.setPlaceOfPublication(bookDTO.getPlaceOfPublication());
         }
-        if (bookDTO.getNoOfAvailableCopies() != 0) {
+        if (bookDTO.getNoOfAvailableCopies() != null) {
             book.setNoOfAvailableCopies(bookDTO.getNoOfAvailableCopies());
         }
         if (bookDTO.getBarcodeNumber() != null) {

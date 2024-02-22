@@ -44,6 +44,24 @@ public class CheckoutRegisterController {
         return new ResponseEntity<>(allRegisters, HttpStatus.OK);
     }
 
+    // get register by member_id
+    // e.g. http://localhost:8080/api/registers/member/1
+    @GetMapping("/member/{id}")
+    public ResponseEntity<List<CheckoutRegisterDTO>> getCheckoutRegistersByMemberId(@PathVariable Long id) {
+        logger.info("Fetching all checkout registers for member ID: {}", id);
+        List<CheckoutRegisterDTO> registers = checkoutRegisterService.getCheckoutsByMemberId(id);
+        return new ResponseEntity<>(registers, HttpStatus.OK);
+    }
+
+    // get register by book_id
+    // e.g. http://localhost:8080/api/registers/book/1
+    @GetMapping("/book/{id}")
+    public ResponseEntity<List<CheckoutRegisterDTO>> getCheckoutRegistersByBookId(@PathVariable Long id) {
+        logger.info("Fetching all checkout registers for book ID: {}", id);
+        List<CheckoutRegisterDTO> registers = checkoutRegisterService.getCheckoutsByBookId(id);
+        return new ResponseEntity<>(registers, HttpStatus.OK);
+    }
+
     @PatchMapping("updateRegister/{id}")
     // e.g. http://localhost:8080/api/registers/updateRegister/5
     public ResponseEntity<CheckoutRegisterDTO> updateRegister(@PathVariable Long id, @RequestBody CheckoutRegisterDTO checkoutRegisterDTO) {
