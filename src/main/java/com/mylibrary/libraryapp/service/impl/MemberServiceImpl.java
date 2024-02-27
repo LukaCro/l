@@ -4,7 +4,6 @@ import com.mylibrary.libraryapp.dto.AddressDTO;
 import com.mylibrary.libraryapp.dto.MemberDTO;
 import com.mylibrary.libraryapp.entity.Member;
 import com.mylibrary.libraryapp.entity.PostalAddress;
-import com.mylibrary.libraryapp.exception.ResourceNotFoundException;
 import com.mylibrary.libraryapp.mapper.AddressMapper;
 import com.mylibrary.libraryapp.mapper.MemberMapper;
 import com.mylibrary.libraryapp.repository.AddressRepository;
@@ -20,10 +19,12 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 
 @Service
 @AllArgsConstructor
@@ -131,7 +132,7 @@ public class MemberServiceImpl implements MemberService {
             memberToUpdate.setLastName(memberDTO.getLastName());
         }
         if (memberDTO.getDateOfBirth() != null) {
-            memberToUpdate.setDateOfBirth(memberDTO.getDateOfBirth());
+            memberToUpdate.setDateOfBirth(LocalDate.parse(memberDTO.getDateOfBirth()));
         }
         if (memberDTO.getEmail() != null) {
             memberToUpdate.setEmail(memberDTO.getEmail());
@@ -143,11 +144,16 @@ public class MemberServiceImpl implements MemberService {
             memberToUpdate.setBarcodeNumber(memberDTO.getBarcodeNumber());
         }
         if (memberDTO.getMembershipStarted() != null) {
-            memberToUpdate.setMembershipStarted(memberDTO.getMembershipStarted());
+            memberToUpdate.setMembershipStarted(LocalDate.parse(memberDTO.getMembershipStarted()));
         }
         if (memberDTO.getMembershipEnded() != null) {
-            memberToUpdate.setMembershipEnded(memberDTO.getMembershipEnded());
+            if (memberDTO.getMembershipEnded().isEmpty()) { // Check if the empty string was passed
+                memberToUpdate.setMembershipEnded(null); // Explicitly set to null
+            } else {
+                memberToUpdate.setMembershipEnded(LocalDate.parse(memberDTO.getMembershipEnded()));
+            }
         }
+
         // let's be fancy here
         memberToUpdate.setIsActive(memberDTO.getMembershipEnded() == null);
 

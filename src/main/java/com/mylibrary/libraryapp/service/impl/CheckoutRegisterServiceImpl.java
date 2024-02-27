@@ -128,7 +128,7 @@ public class CheckoutRegisterServiceImpl implements CheckoutRegisterService {
             long daysOverdue = ChronoUnit.DAYS.between(checkoutRegister.getDueDate(), checkoutRegister.getReturnDate());
             checkoutRegister.setOverdueFine(daysOverdue * overdueFineRate);
         } else {
-            checkoutRegister.setOverdueFine(0.0);
+            checkoutRegister.setOverdueFine(null);
         }
     }
 }
