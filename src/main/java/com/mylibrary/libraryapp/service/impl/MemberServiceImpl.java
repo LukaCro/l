@@ -149,13 +149,15 @@ public class MemberServiceImpl implements MemberService {
         if (memberDTO.getMembershipEnded() != null) {
             if (memberDTO.getMembershipEnded().isEmpty()) { // Check if the empty string was passed
                 memberToUpdate.setMembershipEnded(null); // Explicitly set to null
+                memberToUpdate.setIsActive(true);
             } else {
                 memberToUpdate.setMembershipEnded(LocalDate.parse(memberDTO.getMembershipEnded()));
+                memberToUpdate.setIsActive(false);
             }
         }
 
         // let's be fancy here
-        memberToUpdate.setIsActive(memberDTO.getMembershipEnded() == null);
+        // memberToUpdate.setIsActive(memberDTO.getMembershipEnded() == null || memberDTO.getMembershipEnded().isEmpty());
 
         // Handle PostalAddress update
         if (memberDTO.getPostalAddress() != null) {
