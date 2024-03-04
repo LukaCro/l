@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -61,8 +62,16 @@ public class MemberController {
     // http://localhost:8080/api/members/addMember
     public ResponseEntity<MemberDTO> addBook(@Valid @RequestBody MemberDTO memberDTO) {
         logger.info("Adding new member: {}", memberDTO);
-        MemberDTO savedMemberDTO = memberService.addMember(memberDTO);
-        return new ResponseEntity<>(savedMemberDTO, HttpStatus.CREATED);
+        try {
+            MemberDTO savedMemberDTO = memberService.addMember(memberDTO);
+            return new ResponseEntity<>(savedMemberDTO, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            // Assuming your service method throws IllegalArgumentException for invalid input
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+        } catch (Exception e) {
+            // Catch-all for other exceptions
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "An error occurred", e);
+        }
     }
 
     @PatchMapping("updateMember/{id}")

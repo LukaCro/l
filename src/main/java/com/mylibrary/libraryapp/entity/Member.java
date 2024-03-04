@@ -33,12 +33,10 @@ public class Member {
     @JoinColumn(name = "postal_address_id")
     private PostalAddress postalAddress;
 
-    @Column(nullable = false)
-    @NotNull
+    @Column
     private String email;
 
-    @Column(nullable = false)
-    @NotNull
+    @Column
     private String phone;
 
     @Column(nullable = false)

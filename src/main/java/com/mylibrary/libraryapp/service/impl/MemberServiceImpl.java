@@ -1,5 +1,6 @@
 package com.mylibrary.libraryapp.service.impl;
 
+import com.mylibrary.libraryapp.controller.MemberController;
 import com.mylibrary.libraryapp.dto.AddressDTO;
 import com.mylibrary.libraryapp.dto.MemberDTO;
 import com.mylibrary.libraryapp.entity.Member;
@@ -17,6 +18,8 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -29,6 +32,8 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class MemberServiceImpl implements MemberService {
+
+    private static final Logger logger = LoggerFactory.getLogger(MemberServiceImpl.class);
 
     private MemberRepository memberRepository;
     @PersistenceContext
@@ -90,7 +95,10 @@ public class MemberServiceImpl implements MemberService {
         // Convert MemberDTO to Member entity, associate with saved postal address, and save
         Member member = MemberMapper.mapToMemberEntity(memberDTO);
         member.setPostalAddress(postalAddress); // Associate the saved postal address with the member
+
+        logger.info("Saving member: ", member);
         member = memberRepository.save(member);
+        logger.info("Saved member: ", member);
 
         // Convert the saved Member entity back to MemberDTO and return
         return MemberMapper.mapToMemberDTO(member);

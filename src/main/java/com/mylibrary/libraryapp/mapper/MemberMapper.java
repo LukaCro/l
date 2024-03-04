@@ -51,7 +51,9 @@ public class MemberMapper {
         member.setPhone(memberDTO.getPhone());
         member.setBarcodeNumber(memberDTO.getBarcodeNumber());
         member.setMembershipStarted(LocalDate.parse(memberDTO.getMembershipStarted()));
-        member.setMembershipEnded(LocalDate.parse(memberDTO.getMembershipEnded()));
+        if (memberDTO.getMembershipEnded() != null) {
+            member.setMembershipEnded(LocalDate.parse(memberDTO.getMembershipEnded()));
+        }
         member.setIsActive(memberDTO.getIsActive());
         return member;
     }
