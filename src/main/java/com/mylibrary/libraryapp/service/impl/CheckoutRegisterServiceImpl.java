@@ -101,10 +101,6 @@ public class CheckoutRegisterServiceImpl implements CheckoutRegisterService {
     @Override
     public List<CheckoutRegisterDTO> getCheckoutsByBookId(Long id) {
         List<CheckoutRegister> checkoutRegisters = checkoutRegisterRepository.findByBookId(id);
-        // if non found
-        if (checkoutRegisters.isEmpty()) {
-            throw new ResourceNotFoundException("Checkout register", "Book ID", id);
-        }
         return checkoutRegisters.stream()
                 .map(checkoutRegisterMapper::mapToCheckoutRegisterDTO)
                 .collect(Collectors.toList());
