@@ -1,0 +1,55 @@
+{
+"members": [
+	{
+		"id" : 2,
+		"first_name" : "George",
+		"last_name" : "Costanza",
+		"date_of_birth" : "1955-01-17",
+		"postal_address_id" : 2,
+		"email" : "george@mail.com",
+		"phone" : "1321",
+		"barcode_number" : "222",
+		"membership_ended" : null,
+		"membership_started" : "1992-04-01",
+		"is_active" : true
+	},
+	{
+		"id" : 3,
+		"first_name" : "Cosmo",
+		"last_name" : "Kramer",
+		"date_of_birth" : "1951-12-01",
+		"postal_address_id" : 3,
+		"email" : "cosmo@mail.com",
+		"phone" : "1453",
+		"barcode_number" : "333",
+		"membership_ended" : null,
+		"membership_started" : "1991-08-20",
+		"is_active" : true
+	},
+	{
+		"id" : 4,
+		"first_name" : "Elaine",
+		"last_name" : "Benes",
+		"date_of_birth" : "1957-07-12",
+		"postal_address_id" : 4,
+		"email" : "elaine@mail.com",
+		"phone" : "9854",
+		"barcode_number" : "444",
+		"membership_ended" : null,
+		"membership_started" : "2000-01-01",
+		"is_active" : true
+	},
+	{
+		"id" : 1,
+		"first_name" : "Jerry",
+		"last_name" : "Seinfeld",
+		"date_of_birth" : "1954-04-29",
+		"postal_address_id" : 1,
+		"email" : "jerry-seinfeld@mail.com",
+		"phone" : "1234",
+		"barcode_number" : "111",
+		"membership_ended" : null,
+		"membership_started" : "1990-03-12",
+		"is_active" : true
+	}
+]}

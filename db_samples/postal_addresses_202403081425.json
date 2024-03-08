@@ -1,0 +1,93 @@
+{
+"postal_addresses": [
+	{
+		"id" : 2,
+		"street_name" : "Wall Street",
+		"street_number" : "92",
+		"zip_code" : "10005",
+		"place_name" : "New York",
+		"country" : "USA",
+		"additional_info" : null
+	},
+	{
+		"id" : 3,
+		"street_name" : "Crosby Street",
+		"street_number" : "1",
+		"zip_code" : "10013",
+		"place_name" : "New York",
+		"country" : "USA",
+		"additional_info" : "Manhattan"
+	},
+	{
+		"id" : 4,
+		"street_name" : "Washington Street",
+		"street_number" : "37",
+		"zip_code" : "10006",
+		"place_name" : "New York",
+		"country" : "USA",
+		"additional_info" : ""
+	},
+	{
+		"id" : 5,
+		"street_name" : "Shire Road",
+		"street_number" : "21",
+		"zip_code" : null,
+		"place_name" : "Hobbiton",
+		"country" : "Shire",
+		"additional_info" : "don't knock"
+	},
+	{
+		"id" : 6,
+		"street_name" : "5th Avenue",
+		"street_number" : "121",
+		"zip_code" : "10020",
+		"place_name" : "New York",
+		"country" : "U.S.A.",
+		"additional_info" : "2nd floor"
+	},
+	{
+		"id" : 7,
+		"street_name" : "MyStreet",
+		"street_number" : "1",
+		"zip_code" : "10000",
+		"place_name" : "NY",
+		"country" : "USA",
+		"additional_info" : null
+	},
+	{
+		"id" : 1,
+		"street_name" : "5th Avenue",
+		"street_number" : "121",
+		"zip_code" : "10020",
+		"place_name" : "New York",
+		"country" : "USA",
+		"additional_info" : ""
+	},
+	{
+		"id" : 35,
+		"street_name" : "Trg slobode",
+		"street_number" : "12 B",
+		"zip_code" : "49250",
+		"place_name" : "Zlatar",
+		"country" : "HR",
+		"additional_info" : ""
+	},
+	{
+		"id" : 36,
+		"street_name" : "a",
+		"street_number" : "b",
+		"zip_code" : "",
+		"place_name" : "z",
+		"country" : "h",
+		"additional_info" : ""
+	},
+	{
+		"id" : 37,
+		"street_name" : "a",
+		"street_number" : "a",
+		"zip_code" : "",
+		"place_name" : "a",
+		"country" : "a",
+		"additional_info" : ""
+	}
+]}

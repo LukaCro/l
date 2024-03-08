@@ -1,0 +1,58 @@
+{
+"books": [
+	{
+		"id" : 2,
+		"title" : "It",
+		"author" : "S. King",
+		"isbn" : "34567",
+		"publisher" : "Pinguin",
+		"year_of_publication" : 1986,
+		"place_of_publication" : "New York",
+		"no_of_available_copies" : 1,
+		"barcode_number" : "34567"
+	},
+	{
+		"id" : 1,
+		"title" : "Lord of the Rings",
+		"author" : "J.R.R. Tolkien",
+		"isbn" : "123456",
+		"publisher" : "Unwin",
+		"year_of_publication" : 1954,
+		"place_of_publication" : "London X",
+		"no_of_available_copies" : 2,
+		"barcode_number" : "123456"
+	},
+	{
+		"id" : 4,
+		"title" : "Dune",
+		"author" : "F. Herbert",
+		"isbn" : "67890",
+		"publisher" : "Chilton",
+		"year_of_publication" : 1965,
+		"place_of_publication" : "Philadelphia",
+		"no_of_available_copies" : 4,
+		"barcode_number" : "67890"
+	},
+	{
+		"id" : 5,
+		"title" : "Hercule Poirot",
+		"author" : "A. Christie",
+		"isbn" : "77777",
+		"publisher" : "HarperCollins",
+		"year_of_publication" : 1950,
+		"place_of_publication" : "London",
+		"no_of_available_copies" : 12,
+		"barcode_number" : "88888"
+	},
+	{
+		"id" : 3,
+		"title" : "I, Robot",
+		"author" : "I. Asimov",
+		"isbn" : "45678",
+		"publisher" : "Gnome Press",
+		"year_of_publication" : 1952,
+		"place_of_publication" : "New York",
+		"no_of_available_copies" : 0,
+		"barcode_number" : "45678"
+	}
+]}
